@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (ctx) => Products(), 
+      create: (ctx) => Products(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
           ProductDerailsScreen.routeName: (ctx) =>
               ProductDerailsScreen(),
         },
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
