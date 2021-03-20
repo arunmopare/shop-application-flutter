@@ -17,11 +17,11 @@ class OrderItem extends StatelessWidget {
               '\$ ${order.amount}',
             ),
             subtitle: Text(
-              DateFormat('dd MM YYYY hh:mm')
+              DateFormat('dd/MM/yyyy hh:mm')
                   .format(order.dateTime),
             ),
             trailing: IconButton(
-              icon: Icon(Icons.more),
+              icon: Icon(Icons.arrow_drop_down),
               onPressed: () {},
             ),
           )

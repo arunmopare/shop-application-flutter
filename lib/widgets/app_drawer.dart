@@ -27,7 +27,7 @@ class AppDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(
-                Icons.shop,
+                Icons.payment,
               ),
               title: Text('Payment'),
               onTap: () {
