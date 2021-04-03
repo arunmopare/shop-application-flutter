@@ -22,8 +22,7 @@ class AppDrawer extends StatelessWidget {
               ),
               title: Text('Shop'),
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed('/');
+                Navigator.of(context).pushReplacementNamed('/');
               },
             ),
             Divider(),
@@ -33,8 +32,7 @@ class AppDrawer extends StatelessWidget {
               ),
               title: Text('Payment'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(
-                    OrdersScreen.routeName);
+                Navigator.of(context).pushReplacementNamed(OrdersScreen.routeName);
               },
             ),
             Divider(),
@@ -44,8 +42,7 @@ class AppDrawer extends StatelessWidget {
               ),
               title: Text('Manage Products'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(
-                    UserProductScreen.routeName);
+                Navigator.of(context).pushReplacementNamed(UserProductScreen.routeName);
               },
             ),
           ],
