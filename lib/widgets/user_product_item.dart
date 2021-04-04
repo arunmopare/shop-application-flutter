@@ -5,7 +5,7 @@ class UserProductItem extends StatelessWidget {
   final String id;
   final String title;
   final String imageUrl;
-  UserProductItem(this.id,this.title, this.imageUrl);
+  UserProductItem(this.id, this.title, this.imageUrl);
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -19,9 +19,9 @@ class UserProductItem extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, EditProductScreen.routeName,arguments: id);
+                  Navigator.pushNamed(context, EditProductScreen.routeName, arguments: id);
                 },
-                icon: Icon(Icons.add),
+                icon: Icon(Icons.edit),
                 color: Theme.of(context).primaryColor),
             IconButton(
               onPressed: () {},
