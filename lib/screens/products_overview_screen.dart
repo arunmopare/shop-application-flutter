@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/providers/cart.dart';
+import 'package:my_shop/providers/products.dart';
 import 'package:my_shop/screens/cart_screen.dart';
 import 'package:my_shop/widgets/app_drawer.dart';
 import 'package:my_shop/widgets/badge.dart';
@@ -11,15 +12,30 @@ enum FilterOptions {
   All,
 }
 
+var _isInit = true;
+
 class ProductOverviewScreen extends StatefulWidget {
   @override
-  _ProductOverviewScreenState createState() =>
-      _ProductOverviewScreenState();
+  _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
 }
 
-class _ProductOverviewScreenState
-    extends State<ProductOverviewScreen> {
+class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavorite = false;
+
+  // @override
+  // void initState() {
+  //   // Provider.of<Products>(context).fetchAndSetProducts();
+  //   super.initState();
+  // }
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Products>(context).fetchAndSetProducts();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +45,7 @@ class _ProductOverviewScreenState
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
-                if (selectedValue ==
-                    FilterOptions.Favorites) {
+                if (selectedValue == FilterOptions.Favorites) {
                   _showOnlyFavorite = true;
                 } else {
                   _showOnlyFavorite = false;
@@ -42,9 +57,7 @@ class _ProductOverviewScreenState
               PopupMenuItem(
                   child: Text('Only Favorites'),
                   value: FilterOptions.Favorites),
-              PopupMenuItem(
-                  child: Text('Show All'),
-                  value: FilterOptions.All),
+              PopupMenuItem(child: Text('Show All'), value: FilterOptions.All),
             ],
           ),
           Consumer<Cart>(
@@ -57,8 +70,7 @@ class _ProductOverviewScreenState
                 Icons.shopping_cart,
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(CartScreen.routeName);
+                Navigator.of(context).pushNamed(CartScreen.routeName);
               },
             ),
           ),
