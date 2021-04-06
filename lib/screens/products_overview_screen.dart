@@ -13,6 +13,7 @@ enum FilterOptions {
 }
 
 var _isInit = true;
+var _isLoading = false;
 
 class ProductOverviewScreen extends StatefulWidget {
   @override
@@ -27,10 +28,64 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   //   // Provider.of<Products>(context).fetchAndSetProducts();
   //   super.initState();
   // }
+  //
+  Future<void> _pullRefresh() async {
+    try {
+      await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    } catch (error) {
+      print(error);
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Error'),
+          content: Text('Something went Wrong'),
+          actions: [
+            GestureDetector(
+              child: Text('Ok'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<Products>(context).fetchAndSetProducts();
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      }).catchError((error) {
+        setState(() {
+          _isLoading = false;
+          showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text('Error'),
+              content: Text('Something went Wrong'),
+              actions: [
+                GestureDetector(
+                  child: Text('Ok'),
+                  onTap: () {
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ),
+          );
+        });
+      });
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -77,7 +132,12 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavorite),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : RefreshIndicator(
+              child: ProductsGrid(_showOnlyFavorite), onRefresh: _pullRefresh),
     );
   }
 }
