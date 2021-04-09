@@ -8,7 +8,6 @@ import 'package:my_shop/screens/orders_screen.dart';
 import 'package:my_shop/screens/product_details_screen.dart';
 import 'package:my_shop/screens/products_overview_screen.dart';
 import 'package:my_shop/screens/user_product_screen.dart';
-import 'package:my_shop/widgets/user_product_item.dart';
 import 'package:provider/provider.dart';
 
 void main() {
