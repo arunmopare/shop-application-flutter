@@ -16,6 +16,8 @@ var _isInit = true;
 var _isLoading = false;
 
 class ProductOverviewScreen extends StatefulWidget {
+  static const routeName = '/product-overview';
+
   @override
   _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
 }
@@ -40,9 +42,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           title: Text('Error'),
           content: Text('Something went Wrong'),
           actions: [
-            GestureDetector(
-              child: Text('Ok'),
-              onTap: () {
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
                 Navigator.of(ctx).pop();
               },
             )
