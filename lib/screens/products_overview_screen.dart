@@ -27,10 +27,10 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
 
   // @override
   // void initState() {
-  //   // Provider.of<Products>(context).fetchAndSetProducts();
+  //   Provider.of<Products>(context).fetchAndSetProducts();
   //   super.initState();
   // }
-  //
+
   Future<void> _pullRefresh() async {
     try {
       await Provider.of<Products>(context, listen: false).fetchAndSetProducts();

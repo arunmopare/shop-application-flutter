@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/providers/auth.dart';
 import 'package:my_shop/providers/cart.dart';
 import 'package:my_shop/providers/product.dart';
 import 'package:my_shop/screens/product_details_screen.dart';
@@ -19,6 +20,8 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
+
     return Consumer<Product>(
       builder: (ctx, product, child) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -38,11 +41,13 @@ class ProductItem extends StatelessWidget {
           footer: GridTileBar(
             backgroundColor: Colors.black54,
             leading: IconButton(
-              icon: Icon(product.isFavorite
-                  ? Icons.favorite
-                  : Icons.favorite_border),
+              icon: Icon(
+                  product.isFavorite ? Icons.favorite : Icons.favorite_border),
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(
+                  authData.token,
+                  authData.UserId,
+                );
               },
               color: Theme.of(context).accentColor,
             ),
@@ -60,8 +65,7 @@ class ProductItem extends StatelessWidget {
                   product.price,
                   product.title,
                 );
-                Scaffold.of(context)
-                    .removeCurrentSnackBar(); 
+                Scaffold.of(context).removeCurrentSnackBar();
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Added Item to cart'),
